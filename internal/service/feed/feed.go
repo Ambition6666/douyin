@@ -1,6 +1,7 @@
 package feed
 
 import (
+	"douyin/config"
 	"douyin/internal/repository"
 	"douyin/vo"
 	"fmt"
@@ -20,8 +21,8 @@ func GetVideoList(id uint, time int64) vo.Douyin_feed_response {
 func SaveVideo(f string, id uint, t string) {
 	repository.SetVideoLocalPath(t, f)
 	var v vo.Video
-	v.Play_url = fmt.Sprintf("http://192.168.101.32:9090/video?title=%s", t)
-	v.Cover_url = "http://192.168.101.32:9090/douyin/a"
+	v.Play_url = fmt.Sprintf("http://%s:%s/douyin/video?title=%s", config.ServerHost, config.ServerPort, t)
+	v.Cover_url = fmt.Sprintf("http://%s:%s/douyin/a", config.ServerHost, config.ServerPort)
 	v.Title = t
 	v.Create_time = time.Now().Unix()
 	v.AuthorID = id
